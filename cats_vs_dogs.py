@@ -9,7 +9,7 @@ st.title('Cats and Dogs Classifier')
 
 @st.cache_resource
 def load_my_model():
-    return keras.models.load_model(r"C:\Users\sangu\Downloads\cats_vs_dogs.keras")
+    return keras.models.load_model("cats_vs_dogs.keras")
 
 model = load_my_model()
 
