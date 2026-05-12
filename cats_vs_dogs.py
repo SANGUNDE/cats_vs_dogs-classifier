@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf  
 import keras 
 from PIL import Image
@@ -8,7 +9,7 @@ st.title('Cats and Dogs Classifier')
 
 @st.cache_resource
 def load_my_model():
-    return keras.models.load_model("cats_vs_dogs.keras")
+    return keras.models.load_model(r"C:\Users\sangu\Downloads\cats_vs_dogs.keras")
 
 model = load_my_model()
 
@@ -31,7 +32,18 @@ if uploaded_file is not None:
 
     
     prediction = model.predict(processed_image)
-    
-    label = 'Dog' if prediction > 0.5 else 'Cat'
 
-    st.header(f'Predicted Result: {label}')
+    st.write('PROBABILITY DISTRIBUTIONS')
+
+    def display_probs(prediction, w):
+        x = prediction.flatten()
+        categories = ['cat', 'dog']
+
+        fig, axes = plt.subplots()
+        axes.set_ylabel('probabilities')
+        axes.set_xlabel('Probability Distribution')
+        axes.bar(categories, height=x, width=w)
+
+        st.pyplot(fig)
+
+    display_probs(prediction, w=0.2)
